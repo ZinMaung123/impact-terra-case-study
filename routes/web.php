@@ -18,3 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['as' => 'admin.', 'middleware' => 'auth'], function(){
+    Route::get('/api-tokens', 'UserController@show');
+    Route::post('/api-tokens', 'UserController@generate')->name('users.api-tokens.generate');
+});
