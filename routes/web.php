@@ -10,16 +10,23 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::redirect('/', '/'. app()->getLocale())->middleware('localization');
 
-Route::get('/', function () {
+Route::get('/{locale}', function () {
     return view('welcome');
-});
+})->name('welcome')->middleware('localization');
 
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/{locale}/admin/home', 'HomeController@index')->name('home')->middleware('localization');
 
-Route::group(['as' => 'admin.', 'middleware' => 'auth'], function(){
-    Route::get('/api-tokens', 'UserController@show');
-    Route::post('/api-tokens', 'UserController@generate')->name('users.api-tokens.generate');
+Route::group(['prefix' => '{locale}/admin', 'as' => 'admin.', 'middleware' => 'localization'], function(){
+
+    Auth::routes();
+
+    Route::middleware('auth')->group(function(){
+        
+        Route::get('/api-tokens', 'UserController@show');
+        Route::post('/api-tokens', 'UserController@generate')->name('users.api-tokens.generate');
+        Route::resource('/markets', 'MarketController');
+    });
 });

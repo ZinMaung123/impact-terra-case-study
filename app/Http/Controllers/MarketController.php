@@ -14,7 +14,8 @@ class MarketController extends Controller
      */
     public function index()
     {
-        //
+        $markets = Market::cursor();
+        return view('admin.markets.index', compact('markets'));
     }
 
     /**

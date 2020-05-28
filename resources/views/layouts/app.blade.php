@@ -18,14 +18,26 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('app.name', 'ImpactTerra') }}
                 </a>
+                @auth
+                    <a class="navbar" href="{{ route('admin.markets.index', app()->getLocale()) }}">
+                        Markets
+                    </a>
+                    <a class="navbar" href="{{ route('admin.markets.index', app()->getLocale()) }}">
+                        Products
+                    </a>
+                    <a class="navbar" href="{{ route('admin.markets.index', app()->getLocale()) }}">
+                        Market Prices
+                    </a>
+                @endauth
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -39,13 +51,19 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
+                        <li class="nav-item">
+                            <a class="nav-link {{ app()->getLocale() == 'en' ? 'active-locale' : '' }}" href="{{ route(request()->route()->getName(), 'en') }}">{{ __('en') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ app()->getLocale() == 'mm' ? 'active-locale' : '' }}" href="{{ route(request()->route()->getName(), 'mm') }}">{{ __('mm') }}</a>
+                        </li>
                         @guest
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link {{ request()->is('*/admin/login') ? 'active' : ''}}" href="{{ route('admin.login', app()->getLocale()) }}">{{ __('Login') }}</a>
                             </li>
-                            @if (Route::has('register'))
+                            @if (Route::has('admin.register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link {{ request()->is('*/admin/register') ? 'active' : ''}}" href="{{ route('admin.register', app()->getLocale()) }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else
@@ -55,13 +73,13 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    <a class="dropdown-item" href="{{ route('admin.logout', app()->getLocale()) }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    <form id="logout-form" action="{{ route('admin.logout', app()->getLocale()) }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
                                 </div>
