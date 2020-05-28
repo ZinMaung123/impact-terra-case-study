@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMarketProductsTable extends Migration
+class CreatePriceHistoryTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,24 +13,18 @@ class CreateMarketProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('market_product', function (Blueprint $table) {
-
+        Schema::create('price_histories', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->unsignedBigInteger('market_id');
-            $table->foreign('market_id')->references('id')->on('markets');
+            $table->unsignedBigInteger('market_product_id');
+            $table->foreign('market_product_id')->references('id')->on('market_product');
 
-            $table->unsignedBigInteger('product_id');
-            $table->foreign('product_id')->references('id')->on('products');
-            
-            $table->unsignedBigInteger('price');
+            $table->bigInteger('price');
 
             $table->unsignedBigInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users');
-
             
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -41,6 +35,6 @@ class CreateMarketProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('market_product');
+        Schema::dropIfExists('price_histories');
     }
 }

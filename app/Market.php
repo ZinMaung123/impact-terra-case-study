@@ -20,4 +20,15 @@ class Market extends Model
         'updated_at',
         'deleted_at'
     ];
+
+    public function products()
+    {
+        return $this->belongsToMany( Product::class, 'market_product', 'market_id', 'product_id')
+                    ->withPivot('price', 'created_by', 'created_at')
+                    ->orderBy('pivot_created_at', 'desc');
+    }
+
+    public function priceHistories(){
+        return $this->hasManyThrough(PriceHistory::class, MarketProduct::class);
+    }
 }

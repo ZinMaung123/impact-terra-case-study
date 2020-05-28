@@ -20,4 +20,13 @@ class Product extends Model
         'updated_at',
         'deleted_at'
     ];
+
+    public function createdBy()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by');
+    }
+
+    public function priceHistories(){
+        return $this->hasManyThrough(PriceHistory::class, MarketProduct::class);
+    }
 }
