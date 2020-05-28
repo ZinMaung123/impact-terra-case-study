@@ -18,7 +18,7 @@ class Market extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description ?? "",
-            'products' => new ProductCollection($this->products),
+            'products' => new ProductCollection($this->whenLoaded("products")),
         ];
     }
 }

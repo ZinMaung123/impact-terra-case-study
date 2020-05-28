@@ -18,10 +18,13 @@ class Product extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'price' => $this->pivot->price,
+            'price' => $this->whenPivotLoaded('products', function(){
+                        return $this->pivot->price;
+                    }),
             // 'created_by' => new UserResource($this->createdBy),
-            'created_at' => (string)$this->pivot->created_at,
-            'histories' => PriceHistory::collection($this->priceHistories),
+            'created_at' => (string)$this->created_at,
+            'updated_at' => (string)$this->updated_at,
+            'histories' => PriceHistory::collection($this->whenLoaded("priceHistories")),
         ];
     }
 }

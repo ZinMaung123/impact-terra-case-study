@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Market as MarketResource;
 use App\Market;
 use Illuminate\Http\Request;
+use App\Http\Resources\MarketCollection;
 
 class MarketApiController extends Controller
 {
@@ -15,7 +17,7 @@ class MarketApiController extends Controller
      */
     public function index()
     {
-        return Market::all();
+        return MarketResource::collection(Market::all());
     }
 
     /**

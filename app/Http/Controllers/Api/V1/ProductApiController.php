@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Controller;
+use App\Product;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\Product as ProductResource;
 
 class ProductApiController extends Controller
 {
@@ -14,7 +16,7 @@ class ProductApiController extends Controller
      */
     public function index()
     {
-        //
+        return ProductResource::collection(Product::cursor());
     }
 
     /**
