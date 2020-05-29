@@ -9,11 +9,11 @@
             @include('success')
             <div class="card content-card display-card">
                 <div class="card-header">
-                    {{ trans('cruds.markets.title') }} {{ trans('global.list') }}
+                    {{ trans('cruds.products.title') }} {{ trans('global.list') }}
                 </div>
                 <div class="row mt-2 ml-2 col">
-                    <a class="btn btn-success" href="{{ route("admin.markets.create", app()->getLocale()) }}">
-                        {{ trans('global.add') }} {{ trans('cruds.markets.title_singular') }}
+                    <a class="btn btn-success" href="{{ route("admin.products.create", app()->getLocale()) }}">
+                        {{ trans('global.add') }} {{ trans('cruds.products.title_singular') }}
                     </a>
                 </div>
             
@@ -30,19 +30,15 @@
                                         Name
                                     </th>
                                     <th>
-                                        Description
-                                    </th>
-                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($markets as $market)
+                                @foreach($products as $product)
                                     <tr>
-                                        <td>{{ $market->id }}</td>
-                                        <td>{{ $market->name }}</td>
-                                        <td>{{ $market->description ?? "" }}</td>
+                                        <td>{{ $product->id }}</td>
+                                        <td>{{ $product->name }}</td>
                                         <td>                                            
                                             {{-- <a class="btn btn-sm btn-create d-block" href="{{ route('admin.markets.show', $market->id) }}">
                                                 {{ trans('global.view') }}
@@ -50,7 +46,7 @@
                                             {{-- <a class="btn btn-sm btn-info d-block mt-1" href="{{ route('admin.markets.edit', ['market' => $market->id, 'locale' => app()->getLocale()]) }}">
                                                 {{ trans('global.edit') }}
                                             </a> --}}
-                                            <form action="{{ route('admin.markets.destroy', ['locale' => app()->getLocale(), 'market' => $market]) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                            <form action="{{ route('admin.products.destroy', ['locale' => app()->getLocale(), 'product' => $product]) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                                 <input type="submit" class="btn btn-sm btn-create text-danger d-block mt-1" value="{{ trans('global.delete') }}">

@@ -31,7 +31,7 @@
                     <a class="navbar" href="{{ route('admin.markets.index', app()->getLocale()) }}">
                         Markets
                     </a>
-                    <a class="navbar" href="{{ route('admin.markets.index', app()->getLocale()) }}">
+                    <a class="navbar" href="{{ route('admin.products.index', app()->getLocale()) }}">
                         Products
                     </a>
                     <a class="navbar" href="{{ route('admin.markets.index', app()->getLocale()) }}">
@@ -73,6 +73,9 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('admin.users.setting', app()->getLocale()) }}">
+                                         {{ __('Setting') }}
+                                     </a>
                                     <a class="dropdown-item" href="{{ route('admin.logout', app()->getLocale()) }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

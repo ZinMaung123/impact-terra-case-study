@@ -23,4 +23,10 @@ class UserController extends Controller
 
         return back()->withSuccess('API token is generated successfully!');
     }
+
+    public function setting()
+    {
+        $user = auth()->user();
+        return view('admin.users.apiTokens.show', compact('user'));
+    }
 }

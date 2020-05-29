@@ -25,8 +25,10 @@ Route::group(['prefix' => '{locale}/admin', 'as' => 'admin.', 'middleware' => 'l
 
     Route::middleware('auth')->group(function(){
         
-        Route::get('/api-tokens', 'UserController@show');
+        Route::get('/api-tokens', 'UserController@show')->name('users.api-token.show');
         Route::post('/api-tokens', 'UserController@generate')->name('users.api-tokens.generate');
         Route::resource('/markets', 'MarketController');
+        Route::resource('/products', 'ProductController');
+        Route::get('/users/setting', 'UserController@setting')->name('users.setting');
     });
 });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreMarketRequest;
 use App\Market;
 use Illuminate\Http\Request;
 
@@ -25,18 +26,22 @@ class MarketController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.markets.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\StoreMarketRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreMarketRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+        Market::create($validatedData);
+
+        $successMsg = trans('global.messages.success.create', ['name' => trans('cruds.markets.title_singular')]);
+        return redirect()->route('admin.markets.index', app()->getLocale())->withSuccess($successMsg);
     }
 
     /**
@@ -79,8 +84,11 @@ class MarketController extends Controller
      * @param  \App\Market  $market
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Market $market)
+    public function destroy($locale, Market $market)
     {
-        //
+        $market->delete();
+
+        $successMsg = trans('global.messages.success.delete', ['name' => trans('cruds.markets.title_singular')]);
+        return redirect()->route('admin.markets.index', app()->getLocale())->withSuccess($successMsg);
     }
 }
