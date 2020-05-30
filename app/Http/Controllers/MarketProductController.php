@@ -8,19 +8,22 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreMarketProductRequest;
 use App\MarketProduct;
 use App\PriceHistory;
+use App\Repositories\MarketProductInterface;
+use App\Repositories\PriceHistoryInterface;
 
 class MarketProductController extends Controller
 {
+    protected $marketProductRepo, $priceHistoryRepo;
+
+    public function __construct(MarketProductInterface $marketProduct, PriceHistoryInterface $priceHistory)
+    {
+        $this->marketProductRepo = $marketProduct;
+        $this->priceHistoryRepo = $priceHistory;
+    }
+
     public function index(Request $request)
     {
-        $markets = Market::with(["products" => function($query) use ($request){
-            $query->when($request->has('product_id') && $request->product_id, function($productQuery) use ($request){
-                $productQuery->where('products.id', $request->product_id);
-            });
-        }, "products.priceHistories"])
-        ->when($request->has('market_id') && $request->market_id, function($query) use ($request){
-            $query->where('id', $request->market_id);
-        })->cursor();
+        $markets = $this->marketProductRepo->filterAndGetAll($request);
 
         return view('admin.marketPrices.index', compact('markets'));
     }
@@ -37,16 +40,14 @@ class MarketProductController extends Controller
         $user = auth()->user();
 
         $data = $request->validated();
-        $marketProduct = MarketProduct::updateOrCreate(
-                                            ['product_id' => $data['product'] , 'market_id' => $data['market']],
-                                            ["price" => $data['price'], "created_by" => $user->id]
-                                            );
+        
+        $marketProduct = $this->marketProductRepo->updateOrCreate($data, ["price" => $data['price'], "user_id" => $user->id]);
                                         
-        PriceHistory::create([
-            'market_product_id' => $marketProduct->id,
-            'price' => $data['price'],
-            'created_by' => $user->id
-        ]);
+        $priceHistory = $this->priceHistoryRepo->store([
+                                                'market_product_id' => $marketProduct->id,
+                                                'price' => $data['price'],
+                                                'created_by' => $user->id
+                                                ]);
 
         return redirect()->route('admin.market-prices.index', app()->getLocale())->withSuccess('Market Price added.');
     }

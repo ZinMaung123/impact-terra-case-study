@@ -14,27 +14,27 @@
                         @csrf
 
                         <div class="form-group">
-                            <label for="market">{{ trans('cruds.markets.title_singular') }}</label>
-                            <select class="form-control {{ $errors->has('market') ? 'is-invalid' : '' }}" name="market" id="market" required>
+                            <label for="market_id">{{ trans('cruds.markets.title_singular') }}</label>
+                            <select class="form-control {{ $errors->has('market_id') ? 'is-invalid' : '' }}" name="market_id" id="market_id" required>
                                 @foreach($markets as $key => $name)
-                                    <option value="{{ $key }}" {{ old('market') == $key ? 'selected' : ''}}>{{ $name }}</option>
+                                    <option value="{{ $key }}" {{ old('market_id') == $key ? 'selected' : ''}}>{{ $name }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('market'))
-                                <span class='text-danger'>{{ $errors->first('market') }}</span>
+                            @if($errors->has('market_id'))
+                                <span class='text-danger'>{{ $errors->first('market_id') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.market_prices.fields.market_helper') }}</span>
                         </div>
 
                         <div class="form-group">
-                            <label for="product">{{ trans('cruds.products.title_singular') }}</label>
-                            <select class="form-control {{ $errors->has('product') ? 'is-invalid' : '' }}" name="product" id="product" required>
+                            <label for="product_id">{{ trans('cruds.products.title_singular') }}</label>
+                            <select class="form-control {{ $errors->has('product_id') ? 'is-invalid' : '' }}" name="product_id" id="product_id" required>
                                 @foreach($products as $key => $name)
-                                    <option value="{{ $key }}" {{ old('product') == $key ? 'selected' : ''}}>{{ $name }}</option>
+                                    <option value="{{ $key }}" {{ old('product_id') == $key ? 'selected' : ''}}>{{ $name }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('product'))
-                                <span class='text-danger'>{{ $errors->first('product') }}</span>
+                            @if($errors->has('product_id'))
+                                <span class='text-danger'>{{ $errors->first('product_id') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.market_prices.fields.product_helper') }}</span>
                         </div>

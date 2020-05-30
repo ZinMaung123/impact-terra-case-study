@@ -28,4 +28,14 @@ class MarketProduct extends Model
     {
         return $this->hasOne(User::class, 'id', 'created_by');
     }
+
+    public function product()
+    {
+        return $this->hasOne(Product::class, 'id', 'product_id');
+    }
+
+    public function market()
+    {
+        return $this->hasOne(Market::class, 'id', 'market_id');
+    }
 }

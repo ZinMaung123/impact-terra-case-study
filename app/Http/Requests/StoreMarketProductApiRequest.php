@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreMarketProductRequest extends FormRequest
+class StoreMarketProductApiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,7 @@ class StoreMarketProductRequest extends FormRequest
         return [
             'market_id' => 'required | exists:markets,id',
             'product_id' => 'required | exists:products,id',
-            'price' => 'required | integer | min:0',
+            'price' => 'required | integer | min:0'
         ];
     }
 }

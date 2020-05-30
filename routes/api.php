@@ -20,5 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'v1', 'as' => 'api.v1.', 'namespace' => 'Api\V1', "middleware" => "auth:api"], function(){
     Route::apiResource('/markets', 'MarketApiController')->only(['index', 'show']);
     Route::apiResource('/products', 'ProductApiController')->only(['index', 'show']);
-    Route::apiResource('/product-prices', 'MarketProductApiController')->only(['index', 'show']);
+    Route::apiResource('/market-prices', 'MarketProductApiController')->only(['index', 'store']);
 });
