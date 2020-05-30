@@ -29,13 +29,13 @@
                 </a>
                 @auth
                     <a class="navbar" href="{{ route('admin.markets.index', app()->getLocale()) }}">
-                        Markets
+                        {{trans('cruds.markets.title')}}
                     </a>
                     <a class="navbar" href="{{ route('admin.products.index', app()->getLocale()) }}">
-                        Products
+                        {{trans('cruds.products.title')}}
                     </a>
                     <a class="navbar" href="{{ route('admin.market-prices.index', app()->getLocale()) }}">
-                        Market Prices
+                        {{trans('cruds.market_prices.title')}}
                     </a>
                 @endauth
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
