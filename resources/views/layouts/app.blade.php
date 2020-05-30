@@ -34,7 +34,7 @@
                     <a class="navbar" href="{{ route('admin.products.index', app()->getLocale()) }}">
                         Products
                     </a>
-                    <a class="navbar" href="{{ route('admin.markets.index', app()->getLocale()) }}">
+                    <a class="navbar" href="{{ route('admin.market-prices.index', app()->getLocale()) }}">
                         Market Prices
                     </a>
                 @endauth
@@ -52,10 +52,10 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         <li class="nav-item">
-                            <a class="nav-link {{ app()->getLocale() == 'en' ? 'active-locale' : '' }}" href="{{ route(request()->route()->getName(), 'en') }}">{{ __('en') }}</a>
+                            <a class="nav-link {{ app()->getLocale() == 'en' ? 'active-locale' : '' }}" href="{{ swapLangRoute('en')}}">{{ __('en') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {{ app()->getLocale() == 'mm' ? 'active-locale' : '' }}" href="{{ route(request()->route()->getName(), 'mm') }}">{{ __('mm') }}</a>
+                            <a class="nav-link {{ app()->getLocale() == 'mm' ? 'active-locale' : '' }}" href="{{ swapLangRoute('mm')}}">{{ __('mm') }}</a>
                         </li>
                         @guest
                             <li class="nav-item">

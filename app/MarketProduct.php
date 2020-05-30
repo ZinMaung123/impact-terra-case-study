@@ -23,4 +23,9 @@ class MarketProduct extends Model
         'updated_at',
         'deleted_at'
     ];
+
+    public function createdBy()
+    {
+        return $this->hasOne(User::class, 'id', 'created_by');
+    }
 }

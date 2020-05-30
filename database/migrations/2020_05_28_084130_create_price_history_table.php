@@ -17,7 +17,7 @@ class CreatePriceHistoryTable extends Migration
             $table->bigIncrements('id');
 
             $table->unsignedBigInteger('market_product_id');
-            $table->foreign('market_product_id')->references('id')->on('market_product');
+            $table->foreign('market_product_id')->references('id')->on('market_product')->onDelete('cascade');
 
             $table->bigInteger('price');
 

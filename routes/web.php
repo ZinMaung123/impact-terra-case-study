@@ -30,5 +30,11 @@ Route::group(['prefix' => '{locale}/admin', 'as' => 'admin.', 'middleware' => 'l
         Route::resource('/markets', 'MarketController');
         Route::resource('/products', 'ProductController');
         Route::get('/users/setting', 'UserController@setting')->name('users.setting');
+
+        Route::get('/market-prices', 'MarketProductController@index')->name('market-prices.index');
+        Route::get('/market-prices/create', 'MarketProductController@create')->name('market-prices.create');
+        Route::post('/market-prices', 'MarketProductController@store')->name('market-prices.store');
+
+        Route::get('/markets/{market}/products/{product}/market-prices', "MarketProductController@histories")->name('market-prices.histories');
     });
 });

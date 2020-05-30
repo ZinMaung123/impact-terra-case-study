@@ -24,7 +24,7 @@ class Market extends Model
     public function products()
     {
         return $this->belongsToMany( Product::class, 'market_product', 'market_id', 'product_id')
-                    ->withPivot('price', 'created_by', 'created_at')
+                    ->withPivot('price', 'created_by', 'created_at', 'updated_at', 'id')
                     ->orderBy('pivot_created_at', 'desc');
     }
 

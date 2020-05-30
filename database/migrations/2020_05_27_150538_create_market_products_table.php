@@ -18,10 +18,10 @@ class CreateMarketProductsTable extends Migration
             $table->bigIncrements('id');
 
             $table->unsignedBigInteger('market_id');
-            $table->foreign('market_id')->references('id')->on('markets');
+            $table->foreign('market_id')->references('id')->on('markets')->onDelete('cascade');
 
             $table->unsignedBigInteger('product_id');
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             
             $table->unsignedBigInteger('price');
 

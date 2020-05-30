@@ -18,7 +18,7 @@ class Localization
     {
         // $request->route()->setParameter('locale', 'en');
         $locale = $request->route('locale');
-        $route = Route::currentRouteName() ?? 'admin.login';
+        $route = Route::currentRouteName() ?? 'home';
         if(!in_array($locale, ['en', "mm"])){
             return redirect()->route($route, app()->getLocale());
         }

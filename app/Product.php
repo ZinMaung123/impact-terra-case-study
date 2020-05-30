@@ -23,7 +23,7 @@ class Product extends Model
 
     public function createdBy()
     {
-        return $this->hasOne(User::class, 'id', 'created_by');
+        return $this->hasOneThrough(User::class, MarketProduct::class, 'product_id', 'id', 'id', 'created_by');
     }
 
     public function priceHistories(){
