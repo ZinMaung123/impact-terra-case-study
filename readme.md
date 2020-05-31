@@ -15,3 +15,10 @@ This is a case study of Impact Terra Market Prices.
 - npm install && npm run dev
 - php artisan migrate
 ```
+
+## To Acquire api token
+
+- Register a user via register endpoint
+- then Login user via login endpoint
+- the login endpoint will return user information and api_token
+- use this api_token to make API calls
