@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Str;
+
 if(!function_exists('swapLangRoute')){
     function swapLangRoute($lang){
 
@@ -13,5 +15,12 @@ if(!function_exists('swapLangRoute')){
         $fullPath = implode('/', $segments) . $queryStrings;
 
         return url($fullPath);
+    }
+}
+
+if(!function_exists('generateApiToken')){
+    function generateApiToken()
+    {
+        return Str::random(80);
     }
 }

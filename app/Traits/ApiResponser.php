@@ -13,4 +13,13 @@ trait ApiResponser{
             'data' => $data
         ], 201);
     }
+
+    public function successWithMsg($message, $data)
+    {
+        return response()->json([
+            'code' => Response::HTTP_OK,
+            'message' => $message,
+            'data' => $data
+        ], 200);
+    }
 }
