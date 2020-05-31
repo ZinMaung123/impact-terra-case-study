@@ -6,9 +6,11 @@ use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Product as ProductResource;
+use App\Traits\ApiResponser;
 
 class ProductApiController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +18,7 @@ class ProductApiController extends Controller
      */
     public function index()
     {
-        return ProductResource::collection(Product::cursor());
+        return $this->successWithMsg("Products data", ProductResource::collection(Product::cursor()));
     }
 
     /**

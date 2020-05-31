@@ -7,9 +7,11 @@ use App\Http\Resources\Market as MarketResource;
 use App\Market;
 use Illuminate\Http\Request;
 use App\Http\Resources\MarketCollection;
+use App\Traits\ApiResponser;
 
 class MarketApiController extends Controller
 {
+    use ApiResponser;
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +19,7 @@ class MarketApiController extends Controller
      */
     public function index()
     {
-        return MarketResource::collection(Market::all());
+        return $this->successWithMsg("Markets data", MarketResource::collection(Market::all()));
     }
 
     /**
