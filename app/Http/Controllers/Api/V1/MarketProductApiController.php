@@ -6,11 +6,14 @@ use App\Market;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 use App\Http\Resources\MarketCollection;
 use App\Repositories\PriceHistoryInterface;
 use App\Repositories\MarketProductInterface;
+use App\Http\Controllers\MarketProductController;
 use App\Http\Requests\StoreMarketProductApiRequest;
 use App\Http\Resources\MarketProduct as MarketProductResource;
+use Illuminate\Support\Facades\Log;
 
 class MarketProductApiController extends Controller
 {
@@ -26,16 +29,31 @@ class MarketProductApiController extends Controller
 
     public function index(Request $request)
     {
-        $markets = Market::with(["products" => function($query) use ($request){
-                            $query->when($request->has('product_id') && $request->product_id, function($productQuery) use ($request){
-                                $productQuery->where('products.id', $request->product_id);
-                            });
-                        }, "products.priceHistories"])
-                        ->when($request->has('market_id') && $request->market_id, function($query) use ($request){
-                            $query->where('id', $request->market_id);
-                        })->paginate(5);
+        $filters = $request->only(['product', 'market']);
 
-        return new MarketCollection($markets);
+        $cahchedKey = MarketProductController::generateCachedKey($filters);
+
+        if(Cache::has($cahchedKey)){
+            Log::info('cache api exist');
+        }
+        else{
+            Log::info('cache api not exist');
+        }
+        
+        $markets =  Cache::remember($cahchedKey, 60, function() use ($request){
+            $markets = Market::with(["products" => function($query) use ($request){
+                    $query->when($request->has('product_id') && $request->product_id, function($productQuery) use ($request){
+                        $productQuery->where('products.id', $request->product_id);
+                    });
+                }, "products.priceHistories"])
+                ->when($request->has('market_id') && $request->market_id, function($query) use ($request){
+                    $query->where('id', $request->market_id);
+                })->get();
+
+            return $markets;
+        });
+
+        return new MarketCollection($markets->paginate(10));
     }
 
     public function store(StoreMarketProductApiRequest $request)

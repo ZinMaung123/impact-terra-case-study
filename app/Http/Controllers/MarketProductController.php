@@ -15,6 +15,9 @@ class MarketProductController extends Controller
 {
     protected $marketProductRepo, $priceHistoryRepo;
 
+    /**
+     * * Use Service pattern to work together with multiple repository
+     */
     public function __construct(MarketProductInterface $marketProduct, PriceHistoryInterface $priceHistory)
     {
         $this->marketProductRepo = $marketProduct;
@@ -57,5 +60,22 @@ class MarketProductController extends Controller
         $marketHistories = $market->products()->where('product_id', $product->id)->first()->priceHistories ?? [];
 
         return view('admin.marketPrices.history', compact('marketHistories', 'market', 'product'));
+    }
+    
+    public static function generateCachedKey($filters){
+        $cahchedKey = "market_product_all";
+
+        $len = count($filters);
+        $count = 1;
+        foreach($filters as $key => $filter){
+
+            $cahchedKey = "{$key}_{$filter}";
+            if($len != $count){
+                $cahchedKey .= "_";
+            }
+            $count++;
+        }
+
+        return $cahchedKey;
     }
 }
