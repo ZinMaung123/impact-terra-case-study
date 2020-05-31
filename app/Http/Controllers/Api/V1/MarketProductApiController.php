@@ -32,14 +32,10 @@ class MarketProductApiController extends Controller
         $filters = $request->only(['product', 'market']);
 
         $cahchedKey = MarketProductController::generateCachedKey($filters);
-
-        if(Cache::has($cahchedKey)){
-            Log::info('cache api exist');
-        }
-        else{
-            Log::info('cache api not exist');
-        }
         
+        /**
+         * Need to update cache remember time
+         */
         $markets =  Cache::remember($cahchedKey, 60, function() use ($request){
             $markets = Market::with(["products" => function($query) use ($request){
                     $query->when($request->has('product_id') && $request->product_id, function($productQuery) use ($request){
