@@ -32,7 +32,7 @@ class AuthApiController extends Controller
             return $this->successWithMsg("Login success", $user);
         }
 
-        return $this->successWithMsg('Login Failed.', []);
+        return $this->loginFailedResponse('Login Failed. Invalid credential.');
     }
 
     protected function validateLogin(Request $request)

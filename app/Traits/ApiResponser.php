@@ -22,4 +22,12 @@ trait ApiResponser{
             'data' => $data
         ], 200);
     }
+
+    public function loginFailedResponse($message)
+    {
+        return response()->json([
+            'code' => Response::HTTP_UNAUTHORIZED,
+            'message' => $message,
+        ], 401);
+    }
 }
