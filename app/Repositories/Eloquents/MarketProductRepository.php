@@ -21,22 +21,17 @@ class MarketProductRepository extends BaseRepository implements MarketProductInt
 
     public function filterAndGetAll(Request $request)
     {
-        $filters = $request->all();
 
-        $cahchedKey = MarketProductController::generateCachedKey($filters);
+        $models = Market::with(["products" => function($query) use ($request){
+            $query->when($request->has('product_id') && $request->product_id, function($productQuery) use ($request){
+                $productQuery->where('products.id', $request->product_id);
+            });
+        }, "products.priceHistories"])
+        ->when($request->has('market_id') && $request->market_id, function($query) use ($request){
+            $query->where('id', $request->market_id);
+        })->cursor();
 
-        return Cache::remember($cahchedKey, 60, function() use($request){
-            $models = Market::with(["products" => function($query) use ($request){
-                $query->when($request->has('product_id') && $request->product_id, function($productQuery) use ($request){
-                    $productQuery->where('products.id', $request->product_id);
-                });
-            }, "products.priceHistories"])
-            ->when($request->has('market_id') && $request->market_id, function($query) use ($request){
-                $query->where('id', $request->market_id);
-            })->get();
-
-            return $models;
-        });
+        return $models;
     }
 
     public function updateOrCreate(array $conditionAttr, array $values = []): Model
